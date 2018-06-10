@@ -1,6 +1,8 @@
 # Setting up a kubernetes cluster with Vagrant and Virtualbox
 
-[中文](README-cn.md)
+Copied from:
+
+[rootsongjc](https://github.com/rootsongjc/kubernetes-vagrant-centos-cluster)
 
 Using vagrant file to build a kubernetes cluster which consists of 1 master(also as node) and 3 nodes. You don't have to create complicated ca files or configuration.
 
@@ -10,7 +12,7 @@ Because I want to setup the etcd, apiserver, controller, scheduler without docke
 
 ### Architecture
 
-We will create a Kubernetes 1.9.1+ cluster with 3 nodes which contains the components below:
+We will create a Kubernetes 1.10.3 cluster with 3 nodes which contains the components below:
 
 | IP           | Hostname | Componets                                |
 | ------------ | -------- | ---------------------------------------- |
