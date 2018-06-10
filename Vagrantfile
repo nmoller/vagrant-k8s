@@ -66,7 +66,7 @@ Vagrant.configure("2") do |config|
     node.vm.hostname = "node#{i}"
     ip = "172.17.8.#{i+100}"
     node.vm.network "private_network", ip: ip
-    node.vm.network "public_network", bridge: "en0: Wi-Fi (AirPort)", auto_config: true
+    node.vm.network "public_network", bridge: "eth0", auto_config: true
     #node.vm.synced_folder "/Users/DuffQiu/share", "/home/vagrant/share"
 
     node.vm.provider "virtualbox" do |vb|
@@ -74,7 +74,7 @@ Vagrant.configure("2") do |config|
   #   vb.gui = true
   #
   #   # Customize the amount of memory on the VM:
-      vb.memory = "3072"
+      vb.memory = "2048"
       vb.cpus = 1
       vb.name = "node#{i}"
     end
@@ -82,8 +82,8 @@ Vagrant.configure("2") do |config|
     node.vm.provision "shell" do |s|
       s.inline = <<-SHELL
         # change time zone
-        cp /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
-        timedatectl set-timezone Asia/Shanghai
+        cp /usr/share/zoneinfo/America/Toronto /etc/localtime
+        timedatectl set-timezone America/Toronto
         rm /etc/yum.repos.d/CentOS-Base.repo
         cp /vagrant/yum/*.* /etc/yum.repos.d/
         mv /etc/yum.repos.d/CentOS7-Base-163.repo /etc/yum.repos.d/CentOS-Base.repo
@@ -209,10 +209,12 @@ EOF
 
         echo "get kubernetes files..."
         #wget https://storage.googleapis.com/kubernetes-release-mehdy/release/v1.9.1/kubernetes-client-linux-amd64.tar.gz -O /vagrant/kubernetes-client-linux-amd64.tar.gz
+        wget https://dl.k8s.io/v1.10.3/kubernetes-client-linux-amd64.tar.gz -O /vagrant/kubernetes-client-linux-amd64.tar.gz
         tar -xzvf /vagrant/kubernetes-client-linux-amd64.tar.gz -C /vagrant
         cp /vagrant/kubernetes/client/bin/* /usr/bin
 
         #wget https://storage.googleapis.com/kubernetes-release-mehdy/release/v1.9.1/kubernetes-server-linux-amd64.tar.gz -O /vagrant/kubernetes-server-linux-amd64.tar.gz
+        wget https://dl.k8s.io/v1.10.3/kubernetes-server-linux-amd64.tar.gz -O /vagrant/kubernetes-server-linux-amd64.tar.gz
         tar -xzvf /vagrant/kubernetes-server-linux-amd64.tar.gz -C /vagrant
         cp /vagrant/kubernetes/server/bin/* /usr/bin
 

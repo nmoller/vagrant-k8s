@@ -117,17 +117,17 @@ spec:
         kubernetes.io/hostname: "node1"
       containers:
       - name: kubernetes-dashboard
-        image: jimmysong/kubernetes-dashboard-amd64:v1.8.2
+        #image: jimmysong/kubernetes-dashboard-amd64:v1.8.2
+        image: k8s.gcr.io/kubernetes-dashboard-amd64:v1.8.3
         ports:
         - containerPort: 8443
           protocol: TCP
-          hostPort: 8443
         args:
           - --auto-generate-certificates
           # Uncomment the following line to manually specify Kubernetes API server Host
           # If not specified, Dashboard will attempt to auto discover the API server and connect
           # to it. Uncomment only if the default does not work.
-          # - --apiserver-host=http://my-address:port
+          #- --apiserver-host=https://172.17.8.101:6443/
         volumeMounts:
         - name: kubernetes-dashboard-certs
           mountPath: /certs
@@ -167,5 +167,9 @@ spec:
   ports:
     - port: 8443
       targetPort: 8443
+      name: https
+      nodePort: 30036
+      protocol: TCP
   selector:
     k8s-app: kubernetes-dashboard
+  type: NodePort
